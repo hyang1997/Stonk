@@ -1,7 +1,9 @@
 document.addEventListener('DOMContentLoaded', function() {
     const links = document.querySelectorAll('nav ul li a');
     const content = document.getElementById('content');
-
+    const modal = document.getElementById('modal');
+    const modalBody = document.getElementById('modal-body');
+    const closeBtn = document.querySelector('.close');
     function loadContent(target) {
         fetch(`${target}.html`)
             .then(response => {
@@ -12,6 +14,12 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .then(html => {
                 content.innerHTML = html;
+                if (target === 'exercises') {
+                    initializeExercisePage();
+                }
+                else if (target === 'start-workout'){
+                    initializeWorkoutPage();
+                }
             })
             .catch(error => {
                 console.error('Error loading content:', error);
@@ -27,6 +35,71 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
+    function showModal(content) {
+        modalBody.innerHTML = content;
+        modal.style.display = 'flex';
+    }
+
+    function initializeWorkoutPage(){
+        const templates = document.querySelectorAll('.template-card');
+        console.log(templates)
+
+        templates.forEach(template => {
+            template.addEventListener('click', function() {
+                const detail = `<p>Details about</p>`;
+                showModal(detail);
+            });
+        });
+
+        window.addEventListener('click', function(event) {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+
+        closeBtn.addEventListener('click', function() {
+            modal.style.display = 'none';
+        });
+        
+
+    }
+    function initializeExercisePage() {
+        const modal = document.getElementById('modal');
+        const modalText = document.getElementById('modal-text');
+        const closeBtn = document.querySelector('.close');
+        const exerciseCards = document.querySelectorAll('.exercise-card');
+        
+        exerciseCards.forEach(card => {
+            card.addEventListener('click', function() {
+                const exercise = card.getAttribute('data-exercise');
+                const exerciseDetails = `<p>Details about ${exercise}</p>`;  // Customize this as needed
+                showModal(exerciseDetails);
+            });
+        });
+    
+
+        const newLinks = document.querySelectorAll('.new-link');
+        newLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                const newWorkoutDetails = '<p>Details about New Workout</p>';  // Customize this as needed
+                showModal(newWorkoutDetails);
+            });
+        });
+    
+
+        closeBtn.addEventListener('click', function() {
+            modal.style.display = 'none';
+        });
+
+        window.addEventListener('click', function(event) {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+    }
+
+
+
     // Load the home section by default
-    loadContent('home');
+    loadContent('exercises');
 });
