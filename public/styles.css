@@ -339,6 +339,11 @@ nav ul li a:hover {
     padding: 20px;
     border-radius: 5px;
     text-align: center;
+    width: 80%;
+    height: 60vh; /* Using viewport height */
+    max-width: 800px; /* Optional: Adjust as needed */
+    max-height: 60vh; /* Ensures it does not exceed 80% of viewport height */
+    box-sizing: border-box; /* Ensures padding is included in width and height */
 }
 
 .close {
@@ -362,4 +367,22 @@ nav ul li a:hover {
 
 .template-card{
     cursor:pointer
+}
+
+.workout-template-header{
+    color: #0a84ff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.workout-template-body{
+    display: flex;
+    align-items: center;
+    background-color: #2c2c2e;
+    padding: 1em;
+    border-radius: 8px;
+    flex-direction: column;
+}
+.workout-list{
+    text-align: left;
 }

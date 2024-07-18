@@ -46,8 +46,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
         templates.forEach(template => {
             template.addEventListener('click', function() {
-                const detail = `<p>Details about</p>`;
-                showModal(detail);
+                fetch(`template-workout.html`)
+                    .then(response=>{
+                        if (!response.ok){
+                            throw new Error('Error loading template')
+                        }
+                        return response.text();
+                    })
+                    .then(html=>{
+                        showModal(html);
+                    })
+                
             });
         });
 
@@ -65,7 +74,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     function initializeExercisePage() {
         const modal = document.getElementById('modal');
-        const modalText = document.getElementById('modal-text');
         const closeBtn = document.querySelector('.close');
         const exerciseCards = document.querySelectorAll('.exercise-card');
         
