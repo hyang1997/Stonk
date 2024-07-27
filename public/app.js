@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", event =>{
     const app = firebase.app();
     console.log(app);
+    const db = getFirestore(app);
 });
 
 function googleLogin(){
@@ -13,3 +14,11 @@ function googleLogin(){
             })
             .catch(console.log)
 };
+
+async function readData() {
+    const querySnapshot = await getDocs(collection(db, "exercise"));
+    querySnapshot.forEach((doc) => {
+      console.log(`${doc.id} => ${JSON.stringify(doc.data())}`);
+    });
+  }
+  
